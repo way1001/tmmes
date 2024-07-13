@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aiforest.tmmes.driver.sdk.init.DriverInitRunner,\
+  com.aiforest.tmmes.driver.sdk.config.DriverTopicConfig
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.aiforest.tmmes.driver.sdk.config.ActiveDriverProfileConfig,\
+  com.aiforest.tmmes.driver.sdk.config.DriverEnvironmentConfig

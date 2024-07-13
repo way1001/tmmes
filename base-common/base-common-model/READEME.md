@@ -1,0 +1,1 @@
+IOT TMMES 平台 公共的 Model 配置。

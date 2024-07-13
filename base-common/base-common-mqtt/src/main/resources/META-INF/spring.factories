@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aiforest.tmmes.common.mqtt.config.MqttConfig,\
+  com.aiforest.tmmes.common.mqtt.init.MqttInitRunner
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.aiforest.tmmes.common.mqtt.config.ActiveMqttProfileConfig,\
+  com.aiforest.tmmes.common.mqtt.config.MqttEnvironmentConfig

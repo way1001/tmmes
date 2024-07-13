@@ -1,0 +1,48 @@
+package com.aiforest.tmmes.common.annotation;
+
+import com.aiforest.tmmes.common.enums.AuthMode;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * @author linys
+ * @since 2023.04.08
+ * <p>
+ * eg. @CheckPermission("resource code"), @CheckPermission({"resource code","resource code"})
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface CheckPermission {
+
+    /**
+     * resource code array
+     *
+     * @return resources code
+     */
+    String[] value() default {};
+
+    /**
+     * resource check mode
+     *
+     * @return mode
+     */
+    AuthMode mode() default AuthMode.AND;
+
+    /**
+     * role code array
+     * satisfy one of resources and roles
+     *
+     * @return role code
+     */
+    String[] role() default {};
+
+    /**
+     * role check mode
+     *
+     * @return mode
+     */
+    AuthMode roleMode() default AuthMode.AND;
+}

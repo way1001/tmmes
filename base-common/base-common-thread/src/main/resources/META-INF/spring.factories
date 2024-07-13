@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aiforest.tmmes.common.config.ThreadPoolConfig
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.aiforest.tmmes.common.config.ActiveThreadProfileConfig

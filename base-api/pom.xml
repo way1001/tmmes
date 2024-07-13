@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2016-present the original author or authors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.aiforest.tmmes</groupId>
+        <artifactId>tmmes</artifactId>
+        <version>2024.5.23</version>
+    </parent>
+
+    <name>${project.artifactId}</name>
+    <artifactId>base-api</artifactId>
+    <version>2024.5.23</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- Base Common Api -->
+        <base.common.api.version>2024.5.23</base.common.api.version>
+    </properties>
+
+    <modules>
+        <module>base-api-auth</module>
+        <module>base-api-manager</module>
+        <module>base-api-data</module>
+    </modules>
+
+    <dependencies>
+
+        <!-- Base Common Api-->
+        <dependency>
+            <groupId>com.aiforest.tmmes</groupId>
+            <artifactId>base-common-api</artifactId>
+        </dependency>
+
+    </dependencies>
+
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+
+<!--            &lt;!&ndash; Base Common Api &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.aiforest.tmmes</groupId>-->
+<!--                <artifactId>base-common-api</artifactId>-->
+<!--                <version>${base.common.api.version}</version>-->
+<!--            </dependency>-->
+
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
+
+
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <id>public-plugin</id>-->
+<!--            <name>Aliyun Public Plugin Repository</name>-->
+<!--            <url>https://maven.aliyun.com/repository/public</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </pluginRepository>-->
+
+<!--        <pluginRepository>-->
+<!--            <id>spring-plugin</id>-->
+<!--            <name>Aliyun Spring Plugin Repository</name>-->
+<!--            <url>https://maven.aliyun.com/repository/spring-plugin</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
+
+    <build>
+        <extensions>
+            <!-- OS 插件 -->
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${os.maven.plugin.version}</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

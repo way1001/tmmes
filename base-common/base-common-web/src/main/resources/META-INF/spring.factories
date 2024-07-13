@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aiforest.tmmes.common.config.GlobalExceptionConfig,\
+  com.aiforest.tmmes.common.config.WebMvcConfig
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.aiforest.tmmes.common.config.ActiveWebProfileConfig

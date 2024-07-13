@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aiforest.tmmes.common.config.RedisTemplateConfig,\
+  com.aiforest.tmmes.common.config.RedisCacheConfig,\
+  com.aiforest.tmmes.common.utils.RedisUtil
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.aiforest.tmmes.common.config.ActiveRedisProfileConfig

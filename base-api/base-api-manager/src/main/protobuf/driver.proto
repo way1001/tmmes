@@ -1,0 +1,77 @@
+/*
+ * Copyright 2016-present the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package api.center.manager;
+
+import "api/common/base.proto";
+import "api/common/enums.proto";
+import "api/common/page.proto";
+import "api/common/r.proto";
+
+// 配置相关
+option java_package = "com.aiforest.tmmes.api.center.manager";
+option java_outer_classname = "DriverProto";
+option objc_class_prefix = "Manager";
+option java_multiple_files = true;
+
+// 接口类
+service DriverApi {
+    rpc list (PageDriverQueryDTO) returns (RPageDriverDTO);
+    rpc selectByDeviceId (ByDeviceQueryDTO) returns (RDriverDTO);
+}
+
+//  By Device Query DTO
+message ByDeviceQueryDTO {
+    string device_id = 1; // 设备ID
+}
+
+// R of Driver DTO
+message RDriverDTO {
+    api.common.RDTO result = 1; // 结果
+    DriverDTO data = 2; // 数据
+}
+
+// R of Page Driver DTO
+message RPageDriverDTO {
+    api.common.RDTO result = 1; // 结果
+    PageDriverDTO data = 2; // 数据
+}
+
+// Page Driver DTO
+message PageDriverQueryDTO {
+    api.common.PageDTO page = 1; // 结果
+    DriverDTO driver = 2; // driver
+}
+
+// Page Driver DTO
+message PageDriverDTO {
+    api.common.PageDTO page = 1; // 结果
+    repeated DriverDTO data = 2; // 数据
+}
+
+// Driver DTO
+message DriverDTO {
+    api.common.BaseDTO base = 1; // 基础
+    string driver_name = 2; // 驱动名称
+    string driver_code = 3; // 驱动编号
+    string service_name = 4; // 驱动服务名称
+    api.common.DriverTypeFlagDTOEnum driver_type_flag = 5; // 驱动类型标识
+    string service_host = 6; // 服务主机
+    api.common.EnableFlagDTOEnum enable_flag = 7; // 使能标识
+    string tenant_id = 8; // 租户ID
+}

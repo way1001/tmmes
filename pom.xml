@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+<!--	<parent>-->
+<!--		<groupId>org.springframework.boot</groupId>-->
+<!--		<artifactId>spring-boot-starter-parent</artifactId>-->
+<!--		<version>3.2.5</version>-->
+<!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--	</parent>-->
+	<groupId>com.aiforest.tmmes</groupId>
+	<artifactId>tmmes</artifactId>
+	<version>2024.5.23</version>
+	<name>tmmes</name>
+	<description>mes</description>
+	<packaging>pom</packaging>
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding >UTF-8</project.build.sourceEncoding>
+
+		<!-- Spring 相关-->
+<!--		<spring.boot.version>3.2.5</spring.boot.version>-->
+<!--		<spring.cloud.version>2023.0.1</spring.cloud.version>-->
+		<spring.boot.version>2.7.11</spring.boot.version>
+		<spring.cloud.version>2021.0.7</spring.cloud.version>
+
+<!--		&lt;!&ndash; Base Center 相关 &ndash;&gt;-->
+<!--		<dc3.center.register.nacos.client.version>2023.4.5</dc3.center.register.nacos.client.version>-->
+
+		<!-- Base Driver 相关 -->
+		<base.driver.sdk.version>2024.5.23</base.driver.sdk.version>
+
+		<!-- Base Common 相关 -->
+		<base.common.version>2024.5.23</base.common.version>
+		<base.common.model.version>2024.5.23</base.common.model.version>
+		<base.common.constant.version>2024.5.23</base.common.constant.version>
+		<base.common.exception.version>2024.5.23</base.common.exception.version>
+		<base.common.log.version>2024.5.23</base.common.log.version>
+		<base.common.public.version>2024.5.23</base.common.public.version>
+		<base.common.web.version>2024.5.23</base.common.web.version>
+		<base.common.quartz.version>2024.5.23</base.common.quartz.version>
+		<base.common.rabbitmq.version>2024.5.23</base.common.rabbitmq.version>
+		<base.common.thread.version>2024.5.23</base.common.thread.version>
+		<base.common.api.version>2024.5.23</base.common.api.version>
+		<base.common.register.version>2024.5.23</base.common.register.version>
+		<base.common.mysql.version>2024.5.23</base.common.mysql.version>
+		<base.common.redis.version>2024.5.23</base.common.redis.version>
+		<base.common.auth.version>2024.5.23</base.common.auth.version>
+		<base.common.mongo.version>2024.5.23</base.common.mongo.version>
+		<base.common.influx.version>2024.5.23</base.common.influx.version>
+		<base.common.mqtt.version>2024.5.23</base.common.mqtt.version>
+
+<!--		&lt;!&ndash; DC3 Api 相关 &ndash;&gt;-->
+<!--		<dc3.api.version>2023.4.5</dc3.api.version>-->
+<!--		<dc3.api.auth.version>2023.4.5</dc3.api.auth.version>-->
+<!--		<dc3.api.data.version>2023.4.5</dc3.api.data.version>-->
+<!--		<dc3.api.manager.version>2023.4.5</dc3.api.manager.version>-->
+
+		<!-- 其他依赖-->
+		<spring-oauth2.version>2.5.2.RELEASE</spring-oauth2.version>
+		<spring-data-mongodb.version>3.4.10</spring-data-mongodb.version>
+		<spring.cloud.nacos.version>2021.0.5.0</spring.cloud.nacos.version>
+		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+		<commons-fileupload.version>1.5</commons-fileupload.version>
+		<commons.io.version>2.11.0</commons.io.version>
+		<commons.lang3.version>3.12.0</commons.lang3.version>
+		<snakeyaml.version>2.0</snakeyaml.version>
+		<mybatis.plus.version>3.5.3.1</mybatis.plus.version>
+		<mybatis.dynamic.version>3.6.1</mybatis.dynamic.version>
+		<jackson.version>2.14.2</jackson.version>
+		<velocity.version>2.3</velocity.version>
+		<jwt.version>0.9.1</jwt.version>
+		<jna.version>5.13.0</jna.version>
+		<oshi.version>6.4.1</oshi.version>
+		<jaxb.api.version>2.3.1</jaxb.api.version>
+		<jaxb.version>3.0.2</jaxb.version>
+		<activation.version>1.1.1</activation.version>
+		<milo.version>0.6.8</milo.version>
+		<influxdb.version>6.8.0</influxdb.version>
+		<tdengine.version>3.2.2</tdengine.version>
+		<modbus.version>3.1.0</modbus.version>
+		<apache.poi.version>5.2.3</apache.poi.version>
+		<netty.version>4.1.90.Final</netty.version>
+		<grpc.version>1.53.0</grpc.version>
+		<grpc.spring.boot.version>2.14.0.RELEASE</grpc.spring.boot.version>
+		<protoc.version>3.22.0</protoc.version>
+		<j.interop.version>2.0.4</j.interop.version>
+		<bouncycastle.version>1.46</bouncycastle.version>
+		<paho.mqttv3.version>1.2.5</paho.mqttv3.version>
+		<elasticsearch.version>7.17.7</elasticsearch.version>
+		<jakarta.version>2.1.1</jakarta.version>
+		<mapstruct.version>1.5.3.Final</mapstruct.version>
+		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+		<lombok.version>1.18.30</lombok.version>
+		<guava.version>31.1-jre</guava.version>
+		<hutool.version>5.8.15</hutool.version>
+
+		<!-- 特殊版本 -->
+		<hibernate.validator.version>6.2.5.Final</hibernate.validator.version>
+
+		<!-- Plugin 相关 -->
+		<protobuf.plugin.version>0.6.1</protobuf.plugin.version>
+		<os.maven.plugin.version>1.7.1</os.maven.plugin.version>
+		<maven.gpg.plugin>3.0.1</maven.gpg.plugin>
+		<maven.source.plugin>3.2.1</maven.source.plugin>
+		<maven.javadoc.plugin>3.4.1</maven.javadoc.plugin>
+		<maven.compiler.plugin>3.10.1</maven.compiler.plugin>
+		<maven.resource.plugin>3.3.1</maven.resource.plugin>
+		<maven.nexus.plugin.version>1.6.13</maven.nexus.plugin.version>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
+
+	<dependencies>
+		<!-- Spring Configuration-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!--bootstrap 启动器-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Slf4j Api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- MapStruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<modules>
+		<module>base-gateway</module>
+		<module>base-common</module>
+		<module>base-driver-sdk</module>
+		<module>base-api</module>
+		<module>base-center</module>
+		<module>base-driver</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Cloud 依赖 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!--Spring Security OAuth2-->
+			<dependency>
+				<groupId>org.springframework.security.oauth</groupId>
+				<artifactId>spring-security-oauth2</artifactId>
+				<version>${spring-oauth2.version}</version>
+			</dependency>
+
+			<!-- Mybatis Plus -->
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+				<version>${mybatis.plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+				<version>${mybatis.dynamic.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-core</artifactId>
+				<version>${mybatis.plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-extension</artifactId>
+				<version>${mybatis.plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-annotation</artifactId>
+				<version>${mybatis.plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-generator</artifactId>
+				<version>${mybatis.plus.version}</version>
+			</dependency>
+
+			<!-- Spring Data MongoDB -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-mongodb</artifactId>
+				<version>${spring-data-mongodb.version}</version>
+			</dependency>
+
+			<!-- Jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<!-- Velocity -->
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity-engine-core</artifactId>
+				<version>${velocity.version}</version>
+			</dependency>
+
+			<!-- Jwt -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${jwt.version}</version>
+			</dependency>
+
+			<!-- Oshi & Jna -->
+			<dependency>
+				<groupId>com.github.oshi</groupId>
+				<artifactId>oshi-core</artifactId>
+				<version>${oshi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.java.dev.jna</groupId>
+				<artifactId>jna</artifactId>
+				<version>${jna.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.java.dev.jna</groupId>
+				<artifactId>jna-platform</artifactId>
+				<version>${jna.version}</version>
+			</dependency>
+
+			<!-- Jaxb Api -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-core</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+				<version>${activation.version}</version>
+			</dependency>
+
+			<!-- Hibernate Validator -->
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate.validator.version}</version>
+			</dependency>
+
+			<!-- Snake Yaml -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${snakeyaml.version}</version>
+			</dependency>
+
+			<!-- Eclipse Milo SDK Client -->
+			<dependency>
+				<groupId>org.eclipse.milo</groupId>
+				<artifactId>sdk-client</artifactId>
+				<version>${milo.version}</version>
+			</dependency>
+
+			<!-- Modbus -->
+			<dependency>
+				<groupId>com.infiniteautomation</groupId>
+				<artifactId>modbus4j</artifactId>
+				<version>${modbus.version}</version>
+			</dependency>
+
+			<!-- Netty -->
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>${netty.version}</version>
+			</dependency>
+
+			<!-- gRpc 依赖 -->
+			<dependency>
+				<groupId>io.grpc</groupId>
+				<artifactId>grpc-bom</artifactId>
+				<version>${grpc.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- gRpc -->
+			<dependency>
+				<groupId>io.grpc</groupId>
+				<artifactId>grpc-netty</artifactId>
+				<version>${grpc.version}</version>
+			</dependency>
+
+			<!-- gRpc Protobuf -->
+			<dependency>
+				<groupId>io.grpc</groupId>
+				<artifactId>grpc-protobuf</artifactId>
+				<version>${grpc.version}</version>
+			</dependency>
+
+			<!-- gRpc Stub -->
+			<dependency>
+				<groupId>io.grpc</groupId>
+				<artifactId>grpc-stub</artifactId>
+				<version>${grpc.version}</version>
+			</dependency>
+
+			<!-- gRpc Server + Client -->
+			<dependency>
+				<groupId>net.devh</groupId>
+				<artifactId>grpc-spring-boot-starter</artifactId>
+				<version>${grpc.spring.boot.version}</version>
+			</dependency>
+
+			<!-- gRpc Server -->
+			<dependency>
+				<groupId>net.devh</groupId>
+				<artifactId>grpc-server-spring-boot-starter</artifactId>
+				<version>${grpc.spring.boot.version}</version>
+			</dependency>
+
+			<!-- gRpc Client -->
+			<dependency>
+				<groupId>net.devh</groupId>
+				<artifactId>grpc-client-spring-boot-starter</artifactId>
+				<version>${grpc.spring.boot.version}</version>
+			</dependency>
+
+			<!-- Java Interop 相关 -->
+			<dependency>
+				<groupId>org.jinterop</groupId>
+				<artifactId>j-interop</artifactId>
+				<version>${j.interop.version}</version>
+			</dependency>
+
+			<!-- Tls Cert 相关 -->
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk16</artifactId>
+				<version>${bouncycastle.version}</version>
+			</dependency>
+
+			<!-- Elasticsearch 相关 -->
+			<dependency>
+				<groupId>co.elastic.clients</groupId>
+				<artifactId>elasticsearch-java</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.json</groupId>
+				<artifactId>jakarta.json-api</artifactId>
+				<version>${jakarta.version}</version>
+			</dependency>
+
+			<!-- Mqtt 相关 -->
+			<dependency>
+				<groupId>org.eclipse.paho</groupId>
+				<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+				<version>${paho.mqttv3.version}</version>
+			</dependency>
+
+			<!-- Influxdb -->
+			<dependency>
+				<groupId>com.influxdb</groupId>
+				<artifactId>influxdb-client-java</artifactId>
+				<version>${influxdb.version}</version>
+			</dependency>
+
+			<!-- TDEngine -->
+			<dependency>
+				<groupId>com.taosdata.jdbc</groupId>
+				<artifactId>taos-jdbcdriver</artifactId>
+				<version>${tdengine.version}</version>
+			</dependency>
+
+			<!-- Commons IO -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+
+			<!-- Commons Lang3 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons.lang3.version}</version>
+			</dependency>
+
+			<!-- File Upload -->
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons-fileupload.version}</version>
+			</dependency>
+
+			<!-- Apache Poi -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${apache.poi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${apache.poi.version}</version>
+			</dependency>
+
+			<!-- MapStruct -->
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${mapstruct.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Lombok MapStruct Binding -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-mapstruct-binding</artifactId>
+				<version>${lombok-mapstruct-binding.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Guava -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+
+			<!-- HuTool -->
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+<!--			&lt;!&ndash; DC3 Center Register Nacos Client Starter &ndash;&gt;-->
+<!--			<dependency>-->
+<!--				<groupId>com.aiforest.tmmes</groupId>-->
+<!--				<artifactId>dc3-starter-center-register-nacos-client</artifactId>-->
+<!--				<version>${dc3.center.register.nacos.client.version}</version>-->
+<!--			</dependency>-->
+
+<!--			&lt;!&ndash; Spring Cloud Nacos Client &ndash;&gt;-->
+<!--			<dependency>-->
+<!--				<groupId>com.alibaba.cloud</groupId>-->
+<!--				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--				<version>${spring.cloud.nacos.version}</version>-->
+<!--			</dependency>-->
+			<!--spring cloud alibaba-->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Base Driver Sdk  -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-driver-sdk</artifactId>
+				<version>${base.driver.sdk.version}</version>
+			</dependency>
+
+			<!-- Base Common -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common</artifactId>
+				<version>${base.common.version}</version>
+			</dependency>
+
+			<!-- Base Common Model -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-model</artifactId>
+				<version>${base.common.model.version}</version>
+			</dependency>
+
+			<!-- Base Common Constant -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-constant</artifactId>
+				<version>${base.common.constant.version}</version>
+			</dependency>
+
+			<!-- Base Common Exception -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-exception</artifactId>
+				<version>${base.common.exception.version}</version>
+			</dependency>
+
+			<!-- Base Common Log -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-log</artifactId>
+				<version>${base.common.log.version}</version>
+			</dependency>
+
+			<!-- Base Common Web -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-web</artifactId>
+				<version>${base.common.web.version}</version>
+			</dependency>
+
+			<!-- Base Common Public -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-public</artifactId>
+				<version>${base.common.public.version}</version>
+			</dependency>
+
+			<!-- Base Common RabbitMQ -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-rabbitmq</artifactId>
+				<version>${base.common.rabbitmq.version}</version>
+			</dependency>
+
+			<!-- Base Common Thread -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-thread</artifactId>
+				<version>${base.common.thread.version}</version>
+			</dependency>
+
+			<!-- Base Common API -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-api</artifactId>
+				<version>${base.common.api.version}</version>
+			</dependency>
+
+			<!-- Base Common Quartz -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-quartz</artifactId>
+				<version>${base.common.quartz.version}</version>
+			</dependency>
+
+			<!-- Base Common Register -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-register</artifactId>
+				<version>${base.common.register.version}</version>
+			</dependency>
+
+			<!-- Base Common Mysql -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-mysql</artifactId>
+				<version>${base.common.mysql.version}</version>
+			</dependency>
+
+			<!-- Base Common Redis -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-redis</artifactId>
+				<version>${base.common.redis.version}</version>
+			</dependency>
+
+			<!-- Base Common Auth -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-auth</artifactId>
+				<version>${base.common.auth.version}</version>
+			</dependency>
+
+			<!-- Base Common Mongo -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-mongo</artifactId>
+				<version>${base.common.mongo.version}</version>
+			</dependency>
+
+			<!-- Base Common Influx -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-influx</artifactId>
+				<version>${base.common.influx.version}</version>
+			</dependency>
+
+			<!-- Base Common Mqtt -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-common-mqtt</artifactId>
+				<version>${base.common.mqtt.version}</version>
+			</dependency>
+
+			<!-- Base Api -->
+<!--			<dependency>-->
+<!--				<groupId>com.aiforest.tmmes</groupId>-->
+<!--				<artifactId>base-api</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+
+			<!-- Base Api -->
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-api-auth</artifactId>
+				<version>${project.version}</version>
+<!--				<scope>compile</scope>-->
+			</dependency>
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-api-manager</artifactId>
+				<version>${project.version}</version>
+<!--				<scope>compile</scope>-->
+			</dependency>
+			<dependency>
+				<groupId>com.aiforest.tmmes</groupId>
+				<artifactId>base-api-data</artifactId>
+				<version>${project.version}</version>
+<!--				<scope>compile</scope>-->
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>public</id>
+			<name>Aliyun Public Repository</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring</id>
+			<name>Aliyun Spring Repository</name>
+			<url>https://maven.aliyun.com/repository/spring</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>maven</id>
+			<name>Maven Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>sonatype</id>
+			<name>Sonatype Repository</name>
+			<url>https://s01.oss.sonatype.org/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>public-plugin</id>
+			<name>Aliyun Public Plugin Repository</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>spring-plugin</id>
+			<name>Aliyun Spring Plugin Repository</name>
+			<url>https://maven.aliyun.com/repository/spring-plugin</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-resources-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<nonFilteredFileExtensions>-->
+<!--						<nonFilteredFileExtension>p12</nonFilteredFileExtension>-->
+<!--						<nonFilteredFileExtension>pfx</nonFilteredFileExtension>-->
+<!--					</nonFilteredFileExtensions>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+
+		<pluginManagement>
+			<plugins>
+				<!-- Spring Boot Maven 插件 -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot.version}</version>
+					<configuration>
+						<finalName>${project.build.finalName}</finalName>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- 编译插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin}</version>
+					<configuration>
+						<parameters>true</parameters>
+						<target>${java.version}</target>
+						<source>${java.version}</source>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<annotationProcessorPaths>
+							<path>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+								<version>${lombok.version}</version>
+							</path>
+							<path>
+								<groupId>org.mapstruct</groupId>
+								<artifactId>mapstruct-processor</artifactId>
+								<version>${mapstruct.version}</version>
+							</path>
+							<path>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok-mapstruct-binding</artifactId>
+								<version>${lombok-mapstruct-binding.version}</version>
+							</path>
+						</annotationProcessorPaths>
+					</configuration>
+				</plugin>
+
+				<!-- 源码插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.plugin}</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- 文档插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven.javadoc.plugin}</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- GPG 插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven.gpg.plugin}</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+							<configuration>
+								<keyname>aiforest</keyname>
+								<passphraseServerId>aiforest</passphraseServerId>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!--  Nexus Maven 插件 -->
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>${maven.nexus.plugin.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>aiforest</serverId>
+						<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
+
+				<!-- 过滤文件插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resource.plugin}</version>
+					<configuration>
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>ico</nonFilteredFileExtension>
+							<nonFilteredFileExtension>db</nonFilteredFileExtension>
+							<nonFilteredFileExtension>key</nonFilteredFileExtension>
+							<nonFilteredFileExtension>crt</nonFilteredFileExtension>
+							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+							<nonFilteredFileExtension>proto</nonFilteredFileExtension>
+							<nonFilteredFileExtension>json</nonFilteredFileExtension>
+							<nonFilteredFileExtension>xls</nonFilteredFileExtension>
+							<nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+
+				<!-- Protobuf 插件 -->
+				<plugin>
+					<groupId>org.xolstice.maven.plugins</groupId>
+					<artifactId>protobuf-maven-plugin</artifactId>
+					<version>${protobuf.plugin.version}</version>
+					<configuration>
+						<pluginId>grpc-java</pluginId>
+						<protoSourceRoot>src/main/protobuf</protoSourceRoot>
+						<protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}
+						</protocArtifact>
+						<pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+						</pluginArtifact>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+								<goal>compile-custom</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

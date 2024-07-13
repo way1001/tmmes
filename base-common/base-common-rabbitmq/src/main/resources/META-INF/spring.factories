@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.aiforest.tmmes.common.config.RabbitConfig,\
+  com.aiforest.tmmes.common.config.ExchangeConfig
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.aiforest.tmmes.common.config.ActiveRabbitProfileConfig,\
+  com.aiforest.tmmes.common.config.RabbitmqEnvironmentConfig

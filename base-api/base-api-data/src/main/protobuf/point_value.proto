@@ -1,0 +1,55 @@
+/*
+ * Copyright 2016-present the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package api.center.data;
+
+import "api/common/r.proto";
+
+// 配置相关
+option java_package = "com.aiforest.tmmes.api.center.data";
+option java_outer_classname = "PointValueProto";
+option objc_class_prefix = "Data";
+option java_multiple_files = true;
+
+// 接口类
+service PointValueApi {
+    rpc lastValue (PointValueQuery) returns (RPointValueDTO);
+}
+
+message PointValueQuery {
+    string device_id = 1; // 设备ID
+    string tenant_id = 2; // 租户ID
+    string point_id = 3; //点位ID
+}
+
+
+message RPointValueDTO {
+    api.common.RDTO result = 1; // 结果
+    PointValueDTO data = 2; // 数据
+}
+
+
+message PointValueDTO {
+    string id = 1;
+    string deviceId = 2;//设备ID
+    string pointId = 3;//位号ID
+    string value = 4;//处理值
+    string rawValue = 5;//原始值
+    int64 originTime = 6;//采集时间
+    int64 createTime = 7;//入库时间
+}
