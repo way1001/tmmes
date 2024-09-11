@@ -56,7 +56,7 @@ public class IndexServiceImpl implements IndexService {
             dataStatisticsDTO.setPointCount(pointService.count());
             dataStatisticsDTO.setProfileCount(profileService.count());
             dataStatisticsDTO.setDataCount(deviceService.dataCount());
-            redisUtil.setKey(PrefixConstant.DATA_STATISTICS, dataStatisticsDTO, 60, TimeUnit.MINUTES);
+            redisUtil.setKey(PrefixConstant.DATA_STATISTICS, dataStatisticsDTO, 2, TimeUnit.MINUTES);
         }
         return dataStatisticsDTO;
     }

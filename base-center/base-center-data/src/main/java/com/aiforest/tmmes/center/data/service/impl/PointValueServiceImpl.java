@@ -19,6 +19,10 @@ package com.aiforest.tmmes.center.data.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.aiforest.tmmes.center.data.entity.dto.RealTimePointValueDTO;
+import com.aiforest.tmmes.common.entity.common.Dictionary;
+import com.aiforest.tmmes.common.enums.EnableFlagEnum;
+import com.aiforest.tmmes.common.enums.RwFlagEnum;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.aiforest.tmmes.api.center.data.PointValueQuery;
 import com.aiforest.tmmes.api.center.manager.PagePointQueryDTO;
@@ -50,10 +54,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
@@ -96,6 +97,55 @@ public class PointValueServiceImpl implements PointValueService {
 
         pointValues.forEach(pointValue -> pointValue.setCreateTime(new Date()));
         repositoryHandleService.save(pointValues);
+    }
+
+    @Override
+    public List<RealTimePointValueDTO> list(String deviceId) {
+        List<RealTimePointValueDTO> realTimePointValueDTOList = new ArrayList<>();
+        PageDTO.Builder page = PageDTO.newBuilder()
+                .setSize(100)
+                .setCurrent(1);
+        PointDTO.Builder builder = PointDTO.newBuilder();
+        builder.setPointTypeFlagValue(DefaultConstant.DEFAULT_INT);
+        builder.setRwFlagValue(DefaultConstant.DEFAULT_INT);
+        builder.setEnableFlagValue(DefaultConstant.DEFAULT_INT);
+        PagePointQueryDTO.Builder query = PagePointQueryDTO.newBuilder()
+                .setDeviceId(deviceId)
+                .setPage(page)
+                .setPoint(builder);
+
+        RPagePointDTO rPagePointDTO = pointApiBlockingStub.list(query.build());
+
+        if (!rPagePointDTO.getResult().getOk()) {
+            return realTimePointValueDTOList;
+        }
+        List<PointDTO> points = rPagePointDTO.getData().getDataList();
+        List<String> pointIds = points.stream().map(p -> p.getBase().getId()).collect(Collectors.toList());
+        List<PointValue> pointValueList = realtime(deviceId, pointIds);
+        if (CollUtil.isEmpty(pointValueList)) {
+            pointValueList = latest(deviceId, pointIds);
+        }
+
+        realTimePointValueDTOList = pointValueList.stream().map(p -> {
+            RealTimePointValueDTO realTimePointValueDTO = new RealTimePointValueDTO();
+            realTimePointValueDTO.setDeviceId(p.getDeviceId());
+            realTimePointValueDTO.setPointId(p.getPointId());
+            realTimePointValueDTO.setValue(p.getValue());
+            realTimePointValueDTO.setRawValue(p.getRawValue());
+            realTimePointValueDTO.setOriginTime(p.getOriginTime());
+            Optional<PointDTO> first = points.stream().filter(e -> p.getPointId().equals(e.getBase().getId())).findFirst();
+            first.ifPresent(pointDTO -> {
+                realTimePointValueDTO.setBaseValue(pointDTO.getBaseValue());
+                realTimePointValueDTO.setMultiple(pointDTO.getMultiple());
+                realTimePointValueDTO.setPointName(pointDTO.getPointName());
+                realTimePointValueDTO.setRwFlag(RwFlagEnum.ofName(pointDTO.getRwFlag().name()));
+                realTimePointValueDTO.setUnit(pointDTO.getUnit());
+            });
+            return realTimePointValueDTO;
+        }).collect(Collectors.toList());
+
+        return realTimePointValueDTOList;
+
     }
 
     @Override

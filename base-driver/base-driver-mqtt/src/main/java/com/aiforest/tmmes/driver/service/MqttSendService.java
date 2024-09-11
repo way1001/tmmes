@@ -21,8 +21,8 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 
 /**
- * @author pnoker
- * @since 2022.1.0
+ * @author way
+ * @since 2024.8.24
  */
 @MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
 public interface MqttSendService {

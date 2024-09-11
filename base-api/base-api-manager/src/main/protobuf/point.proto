@@ -32,6 +32,13 @@ option java_multiple_files = true;
 // 接口类
 service PointApi {
     rpc list (PagePointQueryDTO) returns (RPagePointDTO);
+    // add lists but not use
+    rpc lists (DEVICEID) returns (PointDTOList);
+}
+
+//
+message DEVICEID {
+    string device_id = 1;
 }
 
 // R of Page Point DTO
@@ -51,6 +58,10 @@ message PagePointQueryDTO {
 message PagePointDTO {
     api.common.PageDTO page = 1; // 结果
     repeated PointDTO data = 2; // 数据
+}
+
+message PointDTOList {
+    repeated PointDTO data= 1;
 }
 
 // Point DTO

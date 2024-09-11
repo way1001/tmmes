@@ -16,6 +16,7 @@
 
 package com.aiforest.tmmes.center.data.service;
 
+import com.aiforest.tmmes.center.data.entity.dto.RealTimePointValueDTO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.aiforest.tmmes.api.center.data.PointValueQuery;
 import com.aiforest.tmmes.center.data.entity.vo.query.PointValuePageQuery;
@@ -60,4 +61,6 @@ public interface PointValueService {
     Page<PointValue> list(PointValuePageQuery pointValuePageQuery);
 
     PointValue latest(PointValueQuery request);
+
+    List<RealTimePointValueDTO> list(String deviceId);
 }

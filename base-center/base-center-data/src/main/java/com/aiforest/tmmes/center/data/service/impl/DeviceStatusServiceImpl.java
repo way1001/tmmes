@@ -32,6 +32,7 @@ import com.aiforest.tmmes.common.constant.service.ManagerServiceConstant;
 import com.aiforest.tmmes.common.enums.DeviceStatusEnum;
 import com.aiforest.tmmes.common.enums.DriverStatusEnum;
 import com.aiforest.tmmes.common.utils.RedisUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
@@ -95,6 +96,24 @@ public class DeviceStatusServiceImpl implements DeviceStatusService {
 
         List<DeviceDTO> drivers = rPageDeviceDTO.getData().getDataList();
         return getStatusList(drivers);
+    }
+
+    @Override
+    public RPageDeviceDTO devices(DevicePageQuery pageQuery) {
+        PageDTO.Builder page = PageDTO.newBuilder()
+                .setSize(pageQuery.getPage().getSize())
+                .setCurrent(pageQuery.getPage().getCurrent());
+        DeviceDTO.Builder builder = buildDTOByQuery(pageQuery);
+        PageDeviceQueryDTO.Builder query = PageDeviceQueryDTO.newBuilder()
+                .setPage(page)
+                .setDevice(builder);
+        RPageDeviceDTO rPageDeviceDTO = deviceApiBlockingStub.list(query.build());
+
+        if (!rPageDeviceDTO.getResult().getOk()) {
+            return rPageDeviceDTO;
+        }
+
+        return rPageDeviceDTO;
     }
 
     @Override

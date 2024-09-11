@@ -96,7 +96,7 @@ public class DriverCustomServiceImpl implements DriverCustomService {
         - MAINTAIN:维护
         - FAULT:故障
          */
-        driverContext.getDriverMetadata().getDeviceMap().keySet().forEach(id -> driverSenderService.deviceStatusSender(id, DeviceStatusEnum.ONLINE));
+//        driverContext.getDriverMetadata().getDeviceMap().keySet().forEach(id -> driverSenderService.deviceStatusSender(id, DeviceStatusEnum.ONLINE));
     }
 
     @Override
@@ -135,7 +135,9 @@ public class DriverCustomServiceImpl implements DriverCustomService {
             try {
                 modbusMaster.init();
                 connectMap.put(deviceId, modbusMaster);
+                driverSenderService.deviceStatusSender(deviceId, DeviceStatusEnum.ONLINE);
             } catch (ModbusInitException e) {
+                driverSenderService.deviceStatusSender(deviceId, DeviceStatusEnum.OFFLINE);
                 connectMap.entrySet().removeIf(next -> next.getKey().equals(deviceId));
                 log.error("Connect modbus master error: {}", e.getMessage(), e);
                 throw new ConnectorException(e.getMessage());

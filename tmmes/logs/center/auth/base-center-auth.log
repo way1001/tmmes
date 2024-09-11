@@ -1,4 +1,0 @@
-2024-07-13 08:15:41.472  WARN 13600 --- [Thread-39] [ 145] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Start destroying Publisher
-2024-07-13 08:15:41.502  WARN 13600 --- [Thread-33] [ 108] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Start destroying common HttpClient
-2024-07-13 08:15:41.536  WARN 13600 --- [Thread-39] [ 162] c.a.nacos.common.notify.NotifyCenter     : [NotifyCenter] Destruction of the end
-2024-07-13 08:15:41.566  WARN 13600 --- [Thread-33] [ 114] c.a.n.common.http.HttpClientBeanHolder   : [HttpClientBeanHolder] Destruction of the end

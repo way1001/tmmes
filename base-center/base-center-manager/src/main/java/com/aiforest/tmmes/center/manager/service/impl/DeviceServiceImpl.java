@@ -223,6 +223,7 @@ public class DeviceServiceImpl implements DeviceService {
      */
     @Override
     public List<Device> selectByIds(Set<String> ids) {
+        //   ids is 0 ，throw a SQLSyntaxErrorException TODO
         List<Device> devices = deviceMapper.selectBatchIds(ids);
         if (CollUtil.isEmpty(devices)) {
             throw new NotFoundException();

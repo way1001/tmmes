@@ -23,6 +23,7 @@ import com.aiforest.tmmes.common.dto.DeviceCommandDTO;
 import com.aiforest.tmmes.common.entity.driver.AttributeInfo;
 import com.aiforest.tmmes.common.entity.point.PointValue;
 import com.aiforest.tmmes.common.enums.AttributeTypeFlagEnum;
+import com.aiforest.tmmes.common.enums.DeviceStatusEnum;
 import com.aiforest.tmmes.common.exception.ReadPointException;
 import com.aiforest.tmmes.common.exception.ServiceException;
 import com.aiforest.tmmes.common.model.Device;
@@ -75,8 +76,11 @@ public class DriverCommandServiceImpl implements DriverCommandService {
 
             PointValue pointValue = new PointValue(deviceId, pointId, rawValue, ConvertUtil.convertValue(point, rawValue));
             driverSenderService.pointValueSender(pointValue);
+            // TODO Need to improve online detection!!!
+            driverSenderService.deviceStatusSender(deviceId, DeviceStatusEnum.ONLINE);
             return pointValue;
         } catch (Exception e) {
+            driverSenderService.deviceStatusSender(deviceId, DeviceStatusEnum.OFFLINE);
             throw new ServiceException(e.getMessage(), e);
         }
     }

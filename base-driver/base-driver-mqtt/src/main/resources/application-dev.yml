@@ -22,7 +22,7 @@ driver:
       corn: '0/5 * * * * ?'
   mqtt:
     url: ${MQTT_BROKER_URL:ssl://tmmes-rabbitmq:8883}
-    #url: tcp://tmmes-rabbitmq:1883
+#    url: tcp://tmmes-rabbitmq:1883
     auth-type: X509
     username: admin
     password: admin

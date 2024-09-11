@@ -44,6 +44,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -82,6 +84,11 @@ public class AuthenticGatewayFilterFactory extends AbstractGatewayFilterFactory<
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
             ServerHttpRequest request = exchange.getRequest();
+
+            //add public path by way 2024.9.11
+            if (isPublicPath(request.getPath().toString())) {
+                return chain.filter(exchange);
+            }
 
             try {
                 String tenantHeader = GatewayUtil.getRequestHeader(request, RequestConstant.Header.X_AUTH_TENANT);
@@ -150,6 +157,15 @@ public class AuthenticGatewayFilterFactory extends AbstractGatewayFilterFactory<
 
             return chain.filter(exchange);
         }
+
+        //add public by way 2024.9.11
+        private boolean isPublicPath(String path) {
+//            List<String> publicPaths = List.of("/public/**");
+            List<String> publicPaths = new ArrayList<>();
+            publicPaths.add("/public/**");
+            return publicPaths.stream().anyMatch(path::startsWith);
+        }
+
     }
 
 }

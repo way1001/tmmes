@@ -32,7 +32,7 @@ public interface MqttReceiveService {
      * <p>
      * 将解析之后的数据封装 com.aiforest.tmmes.common.bean.point.PointValue
      * 然后调用 driverService.pointValueSender(pointValue) 进行数据推送
-     * Tip： 可参考 dc3-driver-listening-virtual 驱动
+     * Tip： 可参考 base-driver-listening-virtual 驱动
      *
      * @param mqttMessage MqttMessage
      */
@@ -43,7 +43,7 @@ public interface MqttReceiveService {
      * <p>
      * 将解析之后的数据封装 com.aiforest.tmmes.common.bean.point.PointValue
      * 然后调用 driverService.pointValueSender(pointValue) 进行数据推送
-     * Tip： 可参考 dc3-driver-listening-virtual 驱动
+     * Tip： 可参考 base-driver-listening-virtual 驱动
      *
      * @param mqttMessageList String Array List
      */
