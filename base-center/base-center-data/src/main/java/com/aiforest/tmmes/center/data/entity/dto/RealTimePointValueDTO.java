@@ -4,11 +4,8 @@ import com.aiforest.tmmes.common.constant.common.TimeConstant;
 import com.aiforest.tmmes.common.enums.RwFlagEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data

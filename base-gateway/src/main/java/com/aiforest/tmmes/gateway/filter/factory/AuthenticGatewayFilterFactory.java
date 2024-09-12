@@ -162,7 +162,7 @@ public class AuthenticGatewayFilterFactory extends AbstractGatewayFilterFactory<
         private boolean isPublicPath(String path) {
 //            List<String> publicPaths = List.of("/public/**");
             List<String> publicPaths = new ArrayList<>();
-            publicPaths.add("/public/**");
+            publicPaths.add("/manager_public/statistics");
             return publicPaths.stream().anyMatch(path::startsWith);
         }
 

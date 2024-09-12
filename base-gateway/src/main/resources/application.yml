@@ -95,7 +95,7 @@ spring:
         - id: manager_route
           uri: lb://base-center-manager
           predicates:
-            - Path=/api/v3/manager/**
+            - Path=/api/v3/manager/**,/api/v3/manager_public/**
           filters:
             - StripPrefix=2
             - Authentic

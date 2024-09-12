@@ -36,6 +36,7 @@ public class ManagerServiceConstant {
     public static final String SERVICE_NAME = "base-center-manager";
 
     public static final String INDEX_URL_PREFIX = "/manager";
+    public static final String INDEX_PUBLIC_URL_PREFIX = "/manager_public";
     public static final String DRIVER_URL_PREFIX = "/manager/driver";
     public static final String BATCH_URL_PREFIX = "/manager/batch";
     public static final String DRIVER_ATTRIBUTE_URL_PREFIX = "/manager/driver_attribute";

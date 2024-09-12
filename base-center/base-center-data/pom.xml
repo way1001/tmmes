@@ -83,10 +83,10 @@
             <artifactId>base-common-influx</artifactId>
         </dependency>
 
-        <!-- DC3 Common tdengine -->
+        <!-- TMMES Common tdengine -->
         <!--<dependency>
             <groupId>com.aiforest.tmmes</groupId>
-            <artifactId>dc3-common-tdengine</artifactId>
+            <artifactId>base-common-tdengine</artifactId>
         </dependency>-->
 
         <!-- Base Common Quartz -->

@@ -1,6 +1,5 @@
 package com.aiforest.tmmes.center.data.entity.dto;
 
-import com.aiforest.tmmes.common.entity.point.PointValue;
 import lombok.Data;
 
 import java.util.List;
