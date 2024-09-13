@@ -163,6 +163,7 @@ public class AuthenticGatewayFilterFactory extends AbstractGatewayFilterFactory<
 //            List<String> publicPaths = List.of("/public/**");
             List<String> publicPaths = new ArrayList<>();
             publicPaths.add("/manager_public/statistics");
+            publicPaths.add("/data/point_value_command/write");
             return publicPaths.stream().anyMatch(path::startsWith);
         }
 
