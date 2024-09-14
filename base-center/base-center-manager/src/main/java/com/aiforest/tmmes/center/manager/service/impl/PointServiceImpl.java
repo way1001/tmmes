@@ -162,6 +162,24 @@ public class PointServiceImpl implements PointService {
         return point;
     }
 
+    @Override
+    public List<Point> selectByAlikeName(List<String> keywords) {
+        LambdaQueryWrapper<Point> queryWrapper = Wrappers.<Point>query().lambda();
+        for (int i = 0; i < keywords.size(); i++) {
+            if (i == 0) {
+                queryWrapper.like(Point::getPointName, keywords.get(i));
+            } else {
+                queryWrapper.or().like(Point::getPointName, keywords.get(i));
+            }
+        }
+        List<Point> points = pointMapper.selectList(queryWrapper);
+        if (ObjectUtil.isNull(points)) {
+            throw new NotFoundException();
+        }
+        return points;
+    }
+
+
     /**
      * {@inheritDoc}
      */

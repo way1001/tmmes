@@ -19,16 +19,13 @@ package com.aiforest.tmmes.center.data.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.aiforest.tmmes.api.center.manager.*;
 import com.aiforest.tmmes.center.data.entity.dto.RealTimePointValueDTO;
 import com.aiforest.tmmes.common.entity.common.Dictionary;
 import com.aiforest.tmmes.common.enums.EnableFlagEnum;
 import com.aiforest.tmmes.common.enums.RwFlagEnum;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.aiforest.tmmes.api.center.data.PointValueQuery;
-import com.aiforest.tmmes.api.center.manager.PagePointQueryDTO;
-import com.aiforest.tmmes.api.center.manager.PointApiGrpc;
-import com.aiforest.tmmes.api.center.manager.PointDTO;
-import com.aiforest.tmmes.api.center.manager.RPagePointDTO;
 import com.aiforest.tmmes.api.common.EnableFlagDTOEnum;
 import com.aiforest.tmmes.api.common.PageDTO;
 import com.aiforest.tmmes.center.data.entity.vo.query.PointValuePageQuery;
@@ -47,6 +44,7 @@ import com.aiforest.tmmes.common.utils.RedisUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -120,6 +118,31 @@ public class PointValueServiceImpl implements PointValueService {
             return realTimePointValueDTOList;
         }
         List<PointDTO> points = rPagePointDTO.getData().getDataList();
+        return getRealTimePointValueDTOS(deviceId, points);
+
+    }
+
+    @Override
+    public List<RealTimePointValueDTO> specifiedList(String deviceId) {
+        List<RealTimePointValueDTO> realTimePointValueDTOList = new ArrayList<>();
+
+        List<String> list = new ArrayList<>();
+        list.add("当前车速");
+        list.add("当前筒长");
+        PointName.Builder builder = PointName.newBuilder().addAllPointName(list);
+
+        RPagePointListDTO rPagePointListDTO = pointApiBlockingStub.list2(builder.build());
+
+        if (!rPagePointListDTO.getResult().getOk()) {
+            return realTimePointValueDTOList;
+        }
+        List<PointDTO> points = rPagePointListDTO.getDataList();
+        return getRealTimePointValueDTOS(deviceId, points);
+    }
+
+    @NotNull
+    private List<RealTimePointValueDTO> getRealTimePointValueDTOS(String deviceId, List<PointDTO> points) {
+        List<RealTimePointValueDTO> realTimePointValueDTOList;
         List<String> pointIds = points.stream().map(p -> p.getBase().getId()).collect(Collectors.toList());
         List<PointValue> pointValueList = realtime(deviceId, pointIds);
         if (CollUtil.isEmpty(pointValueList)) {
@@ -145,7 +168,6 @@ public class PointValueServiceImpl implements PointValueService {
         }).collect(Collectors.toList());
 
         return realTimePointValueDTOList;
-
     }
 
     @Override

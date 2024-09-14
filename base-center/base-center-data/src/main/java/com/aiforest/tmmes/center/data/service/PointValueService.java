@@ -63,4 +63,6 @@ public interface PointValueService {
     PointValue latest(PointValueQuery request);
 
     List<RealTimePointValueDTO> list(String deviceId);
+
+    List<RealTimePointValueDTO> specifiedList(String deviceId);
 }

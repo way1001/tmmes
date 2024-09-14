@@ -32,12 +32,17 @@ option java_multiple_files = true;
 // 接口类
 service DeviceApi {
     rpc list (PageDeviceQueryDTO) returns (RPageDeviceDTO);
+    rpc list2 (ByIdsQueryDTO) returns (RDeviceListDTO);
     rpc selectByProfileId (ByProfileQueryDTO) returns (RDeviceListDTO);
 }
 
 //  By Profile Query DTO
 message ByProfileQueryDTO {
     string profile_id = 1; // 模板ID
+}
+
+message ByIdsQueryDTO {
+    repeated string device_id = 1; // 设备ID
 }
 
 // R of Device DTO

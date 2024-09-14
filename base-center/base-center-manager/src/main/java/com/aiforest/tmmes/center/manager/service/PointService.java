@@ -41,6 +41,8 @@ public interface PointService extends Service<Point, PointPageQuery> {
      */
     Point selectByNameAndProfileId(String name, String profileId);
 
+    List<Point> selectByAlikeName(List<String> keywords);
+
     /**
      * 根据 设备Id 查询位号
      *

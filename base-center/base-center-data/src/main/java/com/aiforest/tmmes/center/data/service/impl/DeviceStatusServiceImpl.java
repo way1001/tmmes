@@ -117,6 +117,26 @@ public class DeviceStatusServiceImpl implements DeviceStatusService {
     }
 
     @Override
+    public RDeviceListDTO deviceList(List<String> deviceIds) {
+        List<String> ids = new ArrayList<>();
+        ByIdsQueryDTO.Builder builder = ByIdsQueryDTO.newBuilder();
+        if (ObjectUtil.isEmpty(deviceIds)) {
+            builder.addAllDeviceId(ids);
+        }
+        else {
+            builder.addAllDeviceId(deviceIds);
+        }
+
+        RDeviceListDTO rDeviceListDTO = deviceApiBlockingStub.list2(builder.build());
+
+        if (!rDeviceListDTO.getResult().getOk()) {
+            return rDeviceListDTO;
+        }
+        return rDeviceListDTO;
+    }
+
+
+    @Override
     public Map<String, String> deviceByProfileId(String profileId) {
         ByProfileQueryDTO query = ByProfileQueryDTO.newBuilder()
                 .setProfileId(profileId)

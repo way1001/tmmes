@@ -89,11 +89,15 @@ public class DeviceApi extends DeviceApiGrpc.DeviceApiImplBase {
     }
 
     @Override
-    public void selectByProfileId(ByProfileQueryDTO request, StreamObserver<RDeviceListDTO> responseObserver) {
+    public void list2(ByIdsQueryDTO request, StreamObserver<RDeviceListDTO> responseObserver) {
         RDeviceListDTO.Builder builder = RDeviceListDTO.newBuilder();
         RDTO.Builder rBuilder = RDTO.newBuilder();
 
-        List<Device> devices = deviceService.selectByProfileId(request.getProfileId());
+        List<Device> devices = deviceService.selectByIdsList(request.getDeviceIdList());
+        getRDeviceList(responseObserver, builder, rBuilder, devices);
+    }
+
+    private void getRDeviceList(StreamObserver<RDeviceListDTO> responseObserver, RDeviceListDTO.Builder builder, RDTO.Builder rBuilder, List<Device> devices) {
         if (CollUtil.isEmpty(devices)) {
             rBuilder.setOk(false);
             rBuilder.setCode(ResponseEnum.NO_RESOURCE.getCode());
@@ -111,6 +115,15 @@ public class DeviceApi extends DeviceApiGrpc.DeviceApiImplBase {
         builder.setResult(rBuilder);
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void selectByProfileId(ByProfileQueryDTO request, StreamObserver<RDeviceListDTO> responseObserver) {
+        RDeviceListDTO.Builder builder = RDeviceListDTO.newBuilder();
+        RDTO.Builder rBuilder = RDTO.newBuilder();
+
+        List<Device> devices = deviceService.selectByProfileId(request.getProfileId());
+        getRDeviceList(responseObserver, builder, rBuilder, devices);
     }
 
     /**

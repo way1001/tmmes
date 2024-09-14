@@ -17,6 +17,7 @@
 package com.aiforest.tmmes.center.data.service;
 
 import com.aiforest.tmmes.api.center.manager.DeviceDTO;
+import com.aiforest.tmmes.api.center.manager.RDeviceListDTO;
 import com.aiforest.tmmes.api.center.manager.RPageDeviceDTO;
 import com.aiforest.tmmes.center.data.entity.dto.DeviceStatusDTO;
 import com.aiforest.tmmes.center.data.entity.dto.DriverStatusDTO;
@@ -25,6 +26,7 @@ import com.aiforest.tmmes.center.data.entity.vo.query.DriverPageQuery;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Device Interface
@@ -45,6 +47,8 @@ public interface DeviceStatusService {
     List<DeviceStatusDTO> deviceS(DevicePageQuery pageQuery);
 
     RPageDeviceDTO devices(DevicePageQuery pageQuery);
+
+    RDeviceListDTO deviceList(List<String> deviceIds);
 
     /**
      * 根据 模板ID 查询 Device 服务状态

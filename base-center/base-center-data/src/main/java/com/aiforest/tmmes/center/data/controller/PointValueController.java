@@ -18,6 +18,7 @@ package com.aiforest.tmmes.center.data.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.aiforest.tmmes.api.center.manager.DeviceDTO;
+import com.aiforest.tmmes.api.center.manager.RDeviceListDTO;
 import com.aiforest.tmmes.api.center.manager.RPageDeviceDTO;
 import com.aiforest.tmmes.center.data.entity.dto.DevicePointValueDTO;
 import com.aiforest.tmmes.center.data.entity.dto.DeviceStatusDTO;
@@ -127,6 +128,35 @@ public class PointValueController {
             return R.fail(e.getMessage());
         }
         return R.fail();
+    }
+
+    @PostMapping("/runstate")
+    public R<List<DevicePointValueDTO>> deviceState(@RequestBody List<String> deviceIds) {
+        try {
+            RDeviceListDTO rDeviceListDTO = deviceStatusService.deviceList(deviceIds);
+            List<DevicePointValueDTO> devicePointValueDTOS = getSpecifiedDevicePointValueDTOS(rDeviceListDTO);
+            if (ObjectUtil.isNotNull(devicePointValueDTOS)) {
+                return R.ok(devicePointValueDTOS);
+            }
+        } catch (Exception e) {
+            return R.fail(e.getMessage());
+        }
+        return R.fail();
+    }
+
+    private List<DevicePointValueDTO> getSpecifiedDevicePointValueDTOS(RDeviceListDTO rDeviceListDTO) {
+        List<DeviceDTO> deviceDTOList = rDeviceListDTO.getDataList();
+        List<DevicePointValueDTO> devicePointValueDTOS = new ArrayList<>();
+        deviceDTOList.forEach(device -> {
+            DevicePointValueDTO devicePointValueDTO = new DevicePointValueDTO();
+            devicePointValueDTO.setDeviceId(device.getBase().getId());
+            devicePointValueDTO.setDeviceCode(device.getDeviceCode());
+            devicePointValueDTO.setDeviceName(device.getDeviceName());
+            devicePointValueDTO.setGroupId(device.getGroupId());
+            devicePointValueDTO.setRealTimePointValueDTOS(pointValueService.specifiedList(device.getBase().getId()));
+            devicePointValueDTOS.add(devicePointValueDTO);
+        });
+        return devicePointValueDTOS;
     }
 
     @NotNull

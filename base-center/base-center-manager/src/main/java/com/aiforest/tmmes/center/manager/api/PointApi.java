@@ -136,4 +136,31 @@ public class PointApi extends PointApiGrpc.PointApiImplBase {
         return builder.build();
     }
 
+    @Override
+    public void list2(PointName request, StreamObserver<RPagePointListDTO> responseObserver) {
+        RPagePointListDTO.Builder builder = RPagePointListDTO.newBuilder();
+        RDTO.Builder rBuilder = RDTO.newBuilder();
+
+        List<Point> points = pointService.selectByAlikeName(request.getPointNameList());
+
+        if (ObjectUtil.isNull(points)) {
+            rBuilder.setOk(false);
+            rBuilder.setCode(ResponseEnum.NO_RESOURCE.getCode());
+            rBuilder.setMessage(ResponseEnum.NO_RESOURCE.getMessage());
+        } else {
+            rBuilder.setOk(true);
+            rBuilder.setCode(ResponseEnum.OK.getCode());
+            rBuilder.setMessage(ResponseEnum.OK.getMessage());
+
+            List<PointDTO> pointDTO = points.stream().map(this::buildDTOByDO).collect(Collectors.toList());
+
+            builder.addAllData(pointDTO);
+
+        }
+
+        builder.setResult(rBuilder);
+        responseObserver.onNext(builder.build());
+        responseObserver.onCompleted();
+    }
+
 }

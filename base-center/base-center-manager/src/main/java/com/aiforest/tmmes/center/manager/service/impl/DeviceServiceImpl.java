@@ -232,6 +232,16 @@ public class DeviceServiceImpl implements DeviceService {
         return devices;
     }
 
+    @Override
+    public List<Device> selectByIdsList(List<String> ids) {
+        List<Device> devices = deviceMapper.selectBatchIds(ids);
+        if (CollUtil.isEmpty(devices)) {
+            throw new NotFoundException();
+        }
+        devices.forEach(device -> device.setProfileIds(profileBindService.selectProfileIdsByDeviceId(device.getId())));
+        return devices;
+    }
+
     /**
      * {@inheritDoc}
      */
