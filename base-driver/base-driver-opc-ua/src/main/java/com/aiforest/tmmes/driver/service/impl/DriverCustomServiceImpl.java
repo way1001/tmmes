@@ -26,26 +26,32 @@ import com.aiforest.tmmes.common.exception.WritePointException;
 import com.aiforest.tmmes.common.model.Device;
 import com.aiforest.tmmes.common.model.Point;
 import com.aiforest.tmmes.common.utils.JsonUtil;
+import com.aiforest.tmmes.driver.key.KeyLoader;
 import com.aiforest.tmmes.driver.sdk.DriverContext;
 import com.aiforest.tmmes.driver.sdk.service.DriverCustomService;
 import com.aiforest.tmmes.driver.sdk.service.DriverSenderService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.api.identity.AnonymousProvider;
+import org.eclipse.milo.opcua.stack.client.security.DefaultClientCertificateValidator;
 import org.eclipse.milo.opcua.stack.core.UaException;
-import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
-import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
-import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
-import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
+import org.eclipse.milo.opcua.stack.core.security.DefaultTrustListManager;
+import org.eclipse.milo.opcua.stack.core.security.SecurityPolicy;
+import org.eclipse.milo.opcua.stack.core.types.builtin.*;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.*;
 
 import static com.aiforest.tmmes.driver.sdk.utils.DriverUtil.attribute;
 import static com.aiforest.tmmes.driver.sdk.utils.DriverUtil.value;
+import static org.eclipse.milo.opcua.stack.core.Identifiers.EndpointDescription;
 import static org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.Unsigned.uint;
 
 /**
@@ -62,6 +68,9 @@ public class DriverCustomServiceImpl implements DriverCustomService {
     private DriverSenderService driverSenderService;
 
     private Map<String, OpcUaClient> connectMap;
+
+    private DefaultTrustListManager trustListManager;
+
 
     @Override
     public void initial() {
@@ -97,7 +106,12 @@ public class DriverCustomServiceImpl implements DriverCustomService {
         /*
         !!! 提示：此处逻辑仅供参考，请务必结合实际应用场景。!!!
          */
-        OpcUaClient client = getConnector(device.getId(), driverInfo);
+        OpcUaClient client = null;
+        try {
+            client = getConnector(device.getId(), driverInfo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return readValue(client, pointInfo);
 
     }
@@ -107,7 +121,12 @@ public class DriverCustomServiceImpl implements DriverCustomService {
         /*
         !!! 提示：此处逻辑仅供参考，请务必结合实际应用场景。!!!
          */
-        OpcUaClient client = getConnector(device.getId(), driverInfo);
+        OpcUaClient client = null;
+        try {
+            client = getConnector(device.getId(), driverInfo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return writeValue(client, pointInfo, value);
     }
 
@@ -118,7 +137,7 @@ public class DriverCustomServiceImpl implements DriverCustomService {
      * @param driverInfo 驱动信息
      * @return OpcUaClient
      */
-    private OpcUaClient getConnector(String deviceId, Map<String, AttributeInfo> driverInfo) {
+    private OpcUaClient getConnector(String deviceId, Map<String, AttributeInfo> driverInfo) throws Exception  {
         log.debug("Opc Ua Server Connection Info {}", JsonUtil.toJsonString(driverInfo));
         OpcUaClient opcUaClient = connectMap.get(deviceId);
         if (ObjectUtil.isNull(opcUaClient)) {
@@ -127,7 +146,40 @@ public class DriverCustomServiceImpl implements DriverCustomService {
             String path = attribute(driverInfo, "path");
             String url = String.format("opc.tcp://%s:%s%s", host, port, path);
             try {
-                opcUaClient = OpcUaClient.create(url, endpoints -> endpoints.stream().findFirst(), configBuilder -> configBuilder.setIdentityProvider(new AnonymousProvider()).setRequestTimeout(uint(5000)).build());
+                Path securityTempDir = Paths.get(System.getProperty("java.io.tmpdir"), "client", "security");
+                Files.createDirectories(securityTempDir);
+                if (!Files.exists(securityTempDir)) {
+                    throw new Exception("unable to create security dir: " + securityTempDir);
+                }
+                File pkiDir = securityTempDir.resolve("pki").toFile();
+                log.debug("security dir: {}", securityTempDir.toAbsolutePath());
+                log.debug("security pki dir: {}", pkiDir.getAbsolutePath());
+                KeyLoader loader = new KeyLoader().load(securityTempDir);
+
+                trustListManager = new DefaultTrustListManager(pkiDir);
+
+                DefaultClientCertificateValidator certificateValidator =
+                        new DefaultClientCertificateValidator(trustListManager);
+
+//                opcUaClient = OpcUaClient.create(url, endpoints -> endpoints.stream().findFirst(), configBuilder -> configBuilder.setIdentityProvider(new AnonymousProvider()).setRequestTimeout(uint(5000)).build());
+                opcUaClient = OpcUaClient.create(
+                        url,
+                        endpoints ->
+                                endpoints.stream()
+                                        .filter(e -> SecurityPolicy.Basic256Sha256.getUri().equals(e.getSecurityPolicyUri()))
+                                        .findFirst(),
+                        configBuilder ->
+                                configBuilder
+                                        .setApplicationName(LocalizedText.english("TM Client"))
+                                        .setApplicationUri("urn:tm:opc:ua:client")
+                                        .setKeyPair(loader.getClientKeyPair())
+                                        .setCertificate(loader.getClientCertificate())
+                                        .setCertificateChain(loader.getClientCertificateChain())
+//                                        .setCertificateValidator(certificateValidator)
+                                        .setIdentityProvider(new AnonymousProvider())
+                                        .setRequestTimeout(uint(5000))
+                                        .build()
+                );
                 connectMap.put(deviceId, opcUaClient);
             } catch (UaException e) {
                 connectMap.entrySet().removeIf(next -> next.getKey().equals(deviceId));

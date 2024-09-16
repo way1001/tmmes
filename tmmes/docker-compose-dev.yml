@@ -19,6 +19,7 @@ version: '3.8'
 services:
   register:
     image: nacos/nacos-server:v2.3.2
+#    command: ["./wait-for-it.sh", "mysql:3306", "--", "nacos_start_command"]
     restart: on-failure
     ports:
       - "8848:8848"
@@ -33,7 +34,7 @@ services:
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=root
       - MYSQL_SERVICE_DB_NAME=base_nacos
-      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - JVM_XMS=512m
       - JVM_XMX=512m
       - JVM_XMN=256m

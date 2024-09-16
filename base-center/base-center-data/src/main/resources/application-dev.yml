@@ -34,7 +34,7 @@ spring:
   redis:
     host: ${REDIS_HOST:tmmes-redis}
     port: ${REDIS_PORT:56379}
-#    password: ${REDIS_PASSWORD:dc3}
+#    password: ${REDIS_PASSWORD:tmmes}
   data:
     mongodb:
       host: ${MONGO_HOST:tmmes-mongo}
