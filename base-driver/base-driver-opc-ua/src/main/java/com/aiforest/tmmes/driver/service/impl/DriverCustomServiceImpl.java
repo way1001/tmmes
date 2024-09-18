@@ -158,10 +158,13 @@ public class DriverCustomServiceImpl implements DriverCustomService {
 
                 trustListManager = new DefaultTrustListManager(pkiDir);
 
-                DefaultClientCertificateValidator certificateValidator =
-                        new DefaultClientCertificateValidator(trustListManager);
+//                DefaultClientCertificateValidator certificateValidator =
+//                        new DefaultClientCertificateValidator(trustListManager);
 
-//                opcUaClient = OpcUaClient.create(url, endpoints -> endpoints.stream().findFirst(), configBuilder -> configBuilder.setIdentityProvider(new AnonymousProvider()).setRequestTimeout(uint(5000)).build());
+//                opcUaClient = OpcUaClient.create(url, endpoints -> endpoints.stream()
+////                        .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getSecurityPolicyUri()))
+//                        .filter(e -> SecurityPolicy.Basic256Sha256.getUri().equals(e.getSecurityPolicyUri()))
+//                        .findFirst(), configBuilder -> configBuilder.setIdentityProvider(new AnonymousProvider()).setRequestTimeout(uint(5000)).build());
                 opcUaClient = OpcUaClient.create(
                         url,
                         endpoints ->
@@ -268,26 +271,26 @@ public class DriverCustomServiceImpl implements DriverCustomService {
         switch (valueType) {
             case INT:
                 int intValue = value(value.getType().getCode(), value.getValue());
-                status = client.writeValue(nodeId, new DataValue(new Variant(intValue)));
+                status = client.writeValue(nodeId, new DataValue(new Variant(intValue),null, null));
                 break;
             case LONG:
                 long longValue = value(value.getType().getCode(), value.getValue());
-                status = client.writeValue(nodeId, new DataValue(new Variant(longValue)));
+                status = client.writeValue(nodeId, new DataValue(new Variant(longValue),null, null));
                 break;
             case FLOAT:
                 float floatValue = value(value.getType().getCode(), value.getValue());
-                status = client.writeValue(nodeId, new DataValue(new Variant(floatValue)));
+                status = client.writeValue(nodeId, new DataValue(new Variant(floatValue),null, null));
                 break;
             case DOUBLE:
                 double doubleValue = value(value.getType().getCode(), value.getValue());
-                status = client.writeValue(nodeId, new DataValue(new Variant(doubleValue)));
+                status = client.writeValue(nodeId, new DataValue(new Variant(doubleValue),null, null));
                 break;
             case BOOLEAN:
                 boolean booleanValue = value(value.getType().getCode(), value.getValue());
-                status = client.writeValue(nodeId, new DataValue(new Variant(booleanValue)));
+                status = client.writeValue(nodeId, new DataValue(new Variant(booleanValue),null, null));
                 break;
             case STRING:
-                status = client.writeValue(nodeId, new DataValue(new Variant(value.getValue())));
+                status = client.writeValue(nodeId, new DataValue(new Variant(value.getValue()),null, null));
                 break;
             default:
                 break;

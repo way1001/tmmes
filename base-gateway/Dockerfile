@@ -15,8 +15,10 @@
 #
 
 # runtime
-FROM registry.cn-beijing.aliyuncs.com/tmmts/alpine-java:dragonwell-8.13.14 AS runtime
-MAINTAINER aiforest <aiforest.icloud.net>
+#FROM registry.cn-beijing.aliyuncs.com/tmmes/alpine-java:dragonwell-8.13.14 AS runtime
+#MAINTAINER aiforest <aiforest.icloud.net>
+#
+FROM openjdk:8
 
 ENV JAVA_OPS -server \
              -Xms128m \
@@ -34,9 +36,13 @@ ENV GC_LOG   -XX:+PrintGCDetails \
              -XX:+UseGCLogFileRotation \
              -XX:NumberOfGCLogFiles=10 \
              -XX:GCLogFileSize=10M \
-             -Xloggc:tmmes/logs/gateway/gc/dc3-center-gateway.log
+             -Xloggc:tmmes/logs/gateway/gc/base-center-gateway.log
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+
+## 设置 LANG 环境变量为 zh_CN.UTF-8
+#ENV LANG zh_CN.UTF-8
 
 WORKDIR /base-gateway
 

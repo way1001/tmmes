@@ -15,8 +15,9 @@
 #
 
 # runtime
-FROM registry.cn-beijing.aliyuncs.com/tmmes/alpine-java:dragonwell-8.13.14 AS runtime
-MAINTAINER pnoker <pnokers.icloud.com>
+#FROM registry.cn-beijing.aliyuncs.com/tmmes/alpine-java:dragonwell-8.13.14 AS runtime
+#MAINTAINER pnoker <pnokers.icloud.com>
+FROM openjdk:8
 
 # default env
 ENV NODE_ENV dev

@@ -15,8 +15,10 @@
 #
 
 # runtime
-FROM registry.cn-beijing.aliyuncs.com/dc3/alpine-java:dragonwell-8.13.14 AS runtime
-MAINTAINER pnoker <pnokers.icloud.com>
+#FROM registry.cn-beijing.aliyuncs.com/dc3/alpine-java:dragonwell-8.13.14 AS runtime
+#MAINTAINER pnoker <pnokers.icloud.com>
+
+FROM openjdk:8
 
 # default env
 ENV NODE_ENV dev
@@ -40,16 +42,16 @@ ENV GC_LOG   -XX:+PrintGCDetails \
              -XX:+UseGCLogFileRotation \
              -XX:NumberOfGCLogFiles=10 \
              -XX:GCLogFileSize=10M \
-             -Xloggc:dc3/logs/center/manager/gc/dc3-center-manager.log
+             -Xloggc:tmmes/logs/center/manager/gc/base-center-manager.log
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-WORKDIR /dc3-center/dc3-center-manager
+WORKDIR /base-center/base-center-manager
 
-ADD ./target/dc3-center-manager.jar ./
+ADD ./target/base-center-manager.jar ./
 
 EXPOSE ${SERVER_PORT}
-VOLUME /dc3-center/dc3-center-manager/dc3/logs
+VOLUME /base-center/base-center-manager/dc3/logs
 
-CMD mkdir -p /dc3-center/dc3-center-manager/dc3/logs/center/manager/gc \
-    && java ${JAVA_OPS} ${GC_LOG} -jar dc3-center-manager.jar
+CMD mkdir -p /base-center/base-center-manager/tmmes/logs/center/manager/gc \
+    && java ${JAVA_OPS} ${GC_LOG} -jar base-center-manager.jar

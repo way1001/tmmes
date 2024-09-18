@@ -111,6 +111,14 @@
             <artifactId>base-common-model</artifactId>
         </dependency>
 
+        <!-- Specify the exact version of gRPC to use -->
+<!--        <dependency>-->
+<!--            <groupId>io.grpc</groupId>-->
+<!--            <artifactId>grpc-netty-shaded</artifactId>-->
+<!--            <version>1.66.0</version> &lt;!&ndash; Use a version that works well with both Milvus and Qdrant &ndash;&gt;-->
+<!--        </dependency>-->
+
+
     </dependencies>
 
     <repositories>

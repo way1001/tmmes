@@ -1,0 +1,376 @@
+#
+# Copyright 2024-present the TM Mes original author or authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+services:
+  gateway:
+    build:
+      context: ../base-gateway/
+      dockerfile: ./Dockerfile
+    image: base-gateway
+    restart: always
+    ports:
+      - '8000:8000'
+    environment:
+      - NODE_ENV=dev
+    container_name: base-gateway
+    hostname: base-gateway
+    volumes:
+      - logs:/base-gateway/tmmes/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: '10M'
+        max-file: '20'
+    networks:
+      net:
+        aliases:
+          - base-gateway
+
+  auth:
+    build:
+      context: ../base-center/base-center-auth/
+      dockerfile: ./Dockerfile
+    image: base-center-auth
+    restart: always
+    ports:
+      - '8300:8300'
+      - '9300:9300'
+    environment:
+      - NODE_ENV=dev
+    container_name: base-center-auth
+    hostname: base-center-auth
+    volumes:
+      - logs:/base-center/base-center-auth/tmmes/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: '10M'
+        max-file: '20'
+    networks:
+      net:
+        aliases:
+          - base-center-auth
+
+  manager:
+    build:
+      context: ../base-center/base-center-manager/
+      dockerfile: ./Dockerfile
+    image: base-center-manager
+    restart: always
+    ports:
+      - '7400:7400'
+      - '8400:8400'
+      - '9400:9400'
+#    environment:
+#      - NODE_ENV=dev
+    container_name: base-center-manager
+    hostname: base-center-manager
+    volumes:
+      - logs:/base-center/base-center-manager/tmmes/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: '10M'
+        max-file: '20'
+    networks:
+      net:
+        aliases:
+          - base-center-manager
+
+  data:
+    build:
+      context: ../base-center/base-center-data/
+      dockerfile: ./Dockerfile
+    image: base-center-data
+    restart: always
+    ports:
+      - '7500:7500'
+      - '8500:8500'
+      - '9500:9500'
+    environment:
+      - NODE_ENV=dev
+    container_name: base-center-data
+    hostname: base-center-data
+    volumes:
+      - logs:/base-center/base-center-data/tmmes/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: '10M'
+        max-file: '20'
+    networks:
+      net:
+        aliases:
+          - base-center-data
+#
+#  virtual:
+#    build:
+#      context: ../dc3-driver/dc3-driver-virtual/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-virtual:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-virtual
+#    hostname: dc3-driver-virtual
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-virtual/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-virtual
+#
+#  plcs7:
+#    build:
+#      context: ../dc3-driver/dc3-driver-plcs7/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-plcs7:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-plcs7
+#    hostname: dc3-driver-plcs7
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-plcs7/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-plcs7
+#
+#  opc-da:
+#    build:
+#      context: ../dc3-driver/dc3-driver-opc-da/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-opc-da:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-opc-da
+#    hostname: dc3-driver-opc-da
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-opc-da/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-opc-da
+#
+#  opc-ua:
+#    build:
+#      context: ../dc3-driver/dc3-driver-opc-ua/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-opc-ua:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-opc-ua
+#    hostname: dc3-driver-opc-ua
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-opc-ua/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-opc-ua
+#
+#  listening-virtual:
+#    build:
+#      context: ../dc3-driver/dc3-driver-listening-virtual/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-listening-virtual:2024.3.0.dev
+#    restart: always
+#    ports:
+#      - '6270:6270'
+#      - '6271:6271'
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-listening-virtual
+#    hostname: dc3-driver-listening-virtual
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-listening-virtual/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-listening-virtual
+#
+#  dtu-yeecom:
+#    build:
+#      context: ../dc3-driver/dc3-driver-dtu-yeecom/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-dtu-yeecom:2024.3.0.dev
+#    restart: always
+#    ports:
+#      - '9001:9001'
+#      - '9002:9002'
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-dtu-yeecom
+#    hostname: dc3-driver-dtu-yeecom
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-dtu-yeecom/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-dtu-yeecom
+#
+#  lwm2m:
+#    build:
+#      context: ../dc3-driver/dc3-driver-lwm2m/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-lwm2m:2024.3.0.dev
+#    restart: always
+#    ports:
+#      - '5683:5683'
+#      - '5684:5684'
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-lwm2m
+#    hostname: dc3-driver-lwm2m
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-lwm2m/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-lwm2m
+#
+#  mqtt:
+#    build:
+#      context: ../dc3-driver/dc3-driver-mqtt/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-mqtt:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-mqtt
+#    hostname: dc3-driver-mqtt
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-mqtt/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-mqtt
+#
+#  edge-gateway:
+#    build:
+#      context: ../dc3-driver/dc3-driver-edge-gateway/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-edge-gateway:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-edge-gateway
+#    hostname: dc3-driver-edge-gateway
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-edge-gateway/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-edge-gateway
+#
+#  modbus-tcp:
+#    build:
+#      context: ../dc3-driver/dc3-driver-modbus-tcp/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-modbus-tcp:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-modbus-tcp
+#    hostname: dc3-driver-modbus-tcp
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-modbus-tcp/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-modbus-tcp
+#
+#  weather-amap:
+#    build:
+#      context: ../dc3-driver/dc3-driver-weather-amap/
+#      dockerfile: ./Dockerfile
+#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-weather-amap:2024.3.0.dev
+#    restart: always
+#    environment:
+#      - NODE_ENV=dev
+#    container_name: dc3-driver-weather-amap
+#    hostname: dc3-driver-weather-amap
+#    volumes:
+#      - logs:/dc3-driver/dc3-driver-weather-amap/dc3/logs
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: '10M'
+#        max-file: '20'
+#    networks:
+#      dc3net:
+#        aliases:
+#          - dc3-driver-weather-amap
+
+volumes:
+  logs:
+
+networks:
+  net:
+    driver: bridge
+...
