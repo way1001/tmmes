@@ -15,8 +15,9 @@
 #
 
 # runtime
-FROM registry.cn-beijing.aliyuncs.com/dc3/alpine-java:dragonwell-8.13.14 AS runtime
-MAINTAINER pnoker <pnokers.icloud.com>
+#FROM registry.cn-beijing.aliyuncs.com/dc3/alpine-java:dragonwell-8.13.14 AS runtime
+#MAINTAINER pnoker <pnokers.icloud.com>
+FROM openjdk:8
 
 ENV JAVA_OPS -server \
              -Xms128m \
@@ -34,16 +35,16 @@ ENV GC_LOG   -XX:+PrintGCDetails \
              -XX:+UseGCLogFileRotation \
              -XX:NumberOfGCLogFiles=10 \
              -XX:GCLogFileSize=10M \
-             -Xloggc:dc3/logs/driver/opcua/gc/dc3-driver-opc-ua-gc.log
+             -Xloggc:tmmes/logs/driver/opcua/gc/base-driver-opc-ua-gc.log
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-WORKDIR /dc3-driver/dc3-driver-opc-ua
+WORKDIR /base-driver/base-driver-opc-ua
 
-ADD ./target/dc3-driver-opc-ua.jar ./
+ADD ./target/base-driver-opc-ua.jar ./
 
 EXPOSE 8603
-VOLUME /dc3-driver/dc3-driver-opc-ua/dc3/logs
+VOLUME /base-driver/base-driver-opc-ua/tmmes/logs
 
-CMD mkdir -p /dc3-driver/dc3-driver-opc-ua/dc3/logs/driver/opcua/gc \
-    && java ${JAVA_OPS} ${GC_LOG} -jar dc3-driver-opc-ua.jar
+CMD mkdir -p /base-driver/base-driver-opc-ua/tmmes/logs/driver/opcua/gc \
+    && java ${JAVA_OPS} ${GC_LOG} -jar base-driver-opc-ua.jar

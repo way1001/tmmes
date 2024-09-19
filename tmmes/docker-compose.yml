@@ -182,27 +182,27 @@ services:
 #        aliases:
 #          - dc3-driver-opc-da
 #
-#  opc-ua:
-#    build:
-#      context: ../dc3-driver/dc3-driver-opc-ua/
-#      dockerfile: ./Dockerfile
-#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-opc-ua:2024.3.0.dev
-#    restart: always
-#    environment:
-#      - NODE_ENV=dev
-#    container_name: dc3-driver-opc-ua
-#    hostname: dc3-driver-opc-ua
-#    volumes:
-#      - logs:/dc3-driver/dc3-driver-opc-ua/dc3/logs
-#    logging:
-#      driver: json-file
-#      options:
-#        max-size: '10M'
-#        max-file: '20'
-#    networks:
-#      dc3net:
-#        aliases:
-#          - dc3-driver-opc-ua
+  opc-ua:
+    build:
+      context: ../base-driver/base-driver-opc-ua/
+      dockerfile: ./Dockerfile
+    image: base-driver-opc-ua
+    restart: always
+    environment:
+      - NODE_ENV=dev
+    container_name: base-driver-opc-ua
+    hostname: base-driver-opc-ua
+    volumes:
+      - logs:/base-driver/base-driver-opc-ua/tmmes/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: '10M'
+        max-file: '20'
+    networks:
+      net:
+        aliases:
+          - base-driver-opc-ua
 #
 #  listening-virtual:
 #    build:
@@ -323,27 +323,27 @@ services:
 #        aliases:
 #          - dc3-driver-edge-gateway
 #
-#  modbus-tcp:
-#    build:
-#      context: ../dc3-driver/dc3-driver-modbus-tcp/
-#      dockerfile: ./Dockerfile
-#    image: registry.cn-beijing.aliyuncs.com/dc3/dc3-driver-modbus-tcp:2024.3.0.dev
-#    restart: always
-#    environment:
-#      - NODE_ENV=dev
-#    container_name: dc3-driver-modbus-tcp
-#    hostname: dc3-driver-modbus-tcp
-#    volumes:
-#      - logs:/dc3-driver/dc3-driver-modbus-tcp/dc3/logs
-#    logging:
-#      driver: json-file
-#      options:
-#        max-size: '10M'
-#        max-file: '20'
-#    networks:
-#      dc3net:
-#        aliases:
-#          - dc3-driver-modbus-tcp
+  modbus-tcp:
+    build:
+      context: ../base-driver/base-driver-modbus-tcp/
+      dockerfile: ./Dockerfile
+    image: base-driver-modbus-tcp
+    restart: always
+    environment:
+      - NODE_ENV=dev
+    container_name: base-driver-modbus-tcp
+    hostname: base-driver-modbus-tcp
+    volumes:
+      - logs:/base-driver/base-driver-modbus-tcp/tmmes/logs
+    logging:
+      driver: json-file
+      options:
+        max-size: '10M'
+        max-file: '20'
+    networks:
+      net:
+        aliases:
+          - base-driver-modbus-tcp
 #
 #  weather-amap:
 #    build:
@@ -363,7 +363,7 @@ services:
 #        max-size: '10M'
 #        max-file: '20'
 #    networks:
-#      dc3net:
+#      net:
 #        aliases:
 #          - dc3-driver-weather-amap
 

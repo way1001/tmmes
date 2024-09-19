@@ -15,8 +15,9 @@
 #
 
 # runtime
-FROM registry.cn-beijing.aliyuncs.com/dc3/alpine-java:dragonwell-8.13.14 AS runtime
-MAINTAINER pnoker <pnokers.icloud.com>
+#FROM registry.cn-beijing.aliyuncs.com/dc3/alpine-java:dragonwell-8.13.14 AS runtime
+#MAINTAINER pnoker <pnokers.icloud.com>
+FROM openjdk:8
 
 ENV JAVA_OPS -server \
              -Xms128m \
@@ -34,16 +35,16 @@ ENV GC_LOG   -XX:+PrintGCDetails \
              -XX:+UseGCLogFileRotation \
              -XX:NumberOfGCLogFiles=10 \
              -XX:GCLogFileSize=10M \
-             -Xloggc:dc3/logs/driver/modbus-tcp/gc/dc3-driver-modbus-tcp-gc.log
+             -Xloggc:tmmes/logs/driver/modbus-tcp/gc/base-driver-modbus-tcp-gc.log
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-WORKDIR /dc3-driver/dc3-driver-modbus-tcp
+WORKDIR /base-driver/base-driver-modbus-tcp
 
-ADD ./target/dc3-driver-modbus-tcp.jar ./
+ADD ./target/base-driver-modbus-tcp.jar ./
 
 EXPOSE 8604
-VOLUME /dc3-driver/dc3-driver-modbus-tcp/dc3/logs
+VOLUME /base-driver/base-driver-modbus-tcp/tmmes/logs
 
-CMD mkdir -p /dc3-driver/dc3-driver-modbus-tcp/dc3/logs/driver/modbus-tcp/gc \
-    && java ${JAVA_OPS} ${GC_LOG} -jar dc3-driver-modbus-tcp.jar
+CMD mkdir -p /base-driver/base-driver-modbus-tcp/tmmes/logs/driver/modbus-tcp/gc \
+    && java ${JAVA_OPS} ${GC_LOG} -jar base-driver-modbus-tcp.jar
