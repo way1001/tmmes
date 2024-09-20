@@ -40,8 +40,8 @@ spring:
       host: ${MONGO_HOST:tmmes-mongo}
       port: ${MONGO_PORT:27017}
       database: ${MONGO_DATABASE:tmmes}
-      username: ${MONGO_USERNAME:tmmes}
-      password: ${MONGO_PASSWORD:tmmes}
+#      username: ${MONGO_USERNAME:tmmes}
+#      password: ${MONGO_PASSWORD:tmmes}
   cache:
     redis:
       time-to-live: ${CACHE_REDIS_TIME_TO_LIVE:5S}

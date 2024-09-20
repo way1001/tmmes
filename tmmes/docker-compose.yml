@@ -29,6 +29,14 @@ services:
     hostname: base-gateway
     volumes:
       - logs:/base-gateway/tmmes/logs
+      - ./wait-for-it.sh:/wait-for-it.sh
+    entrypoint: "/wait-for-it.sh -t 0 tmmes-center-register:8848 -- "
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        java -Djava.security.egd=file:/dev/./urandom -jar base-gateway.jar
     logging:
       driver: json-file
       options:
@@ -54,6 +62,14 @@ services:
     hostname: base-center-auth
     volumes:
       - logs:/base-center/base-center-auth/tmmes/logs
+      - ./wait-for-it.sh:/wait-for-it.sh
+    entrypoint: "/wait-for-it.sh -t 0 tmmes-center-register:8848 -- "
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        java -Djava.security.egd=file:/dev/./urandom -jar base-center-auth.jar
     logging:
       driver: json-file
       options:
@@ -80,6 +96,14 @@ services:
     hostname: base-center-manager
     volumes:
       - logs:/base-center/base-center-manager/tmmes/logs
+      - ./wait-for-it.sh:/wait-for-it.sh
+    entrypoint: "/wait-for-it.sh -t 0 tmmes-center-register:8848 -- "
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        java -Djava.security.egd=file:/dev/./urandom -jar base-center-manager.jar
     logging:
       driver: json-file
       options:
@@ -106,6 +130,14 @@ services:
     hostname: base-center-data
     volumes:
       - logs:/base-center/base-center-data/tmmes/logs
+      - ./wait-for-it.sh:/wait-for-it.sh
+    entrypoint: "/wait-for-it.sh -t 0 tmmes-center-register:8848 -- "
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 10
+        java -Djava.security.egd=file:/dev/./urandom -jar base-center-data.jar
     logging:
       driver: json-file
       options:
