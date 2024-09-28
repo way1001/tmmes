@@ -19,6 +19,6 @@
 server:
   thread:
     prefix: tmmes-thread-
-    core-pool-size: 4
-    maximum-pool-size: 32
-    keep-alive-time: 15
+    core-pool-size: 8
+    maximum-pool-size: 80
+    keep-alive-time: 9

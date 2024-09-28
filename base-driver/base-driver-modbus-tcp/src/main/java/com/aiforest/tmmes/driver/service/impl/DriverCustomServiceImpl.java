@@ -17,6 +17,7 @@
 package com.aiforest.tmmes.driver.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.aiforest.tmmes.common.entity.driver.DriverMetadata;
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.ModbusMaster;
 import com.serotonin.modbus4j.code.DataType;
@@ -60,6 +61,8 @@ public class DriverCustomServiceImpl implements DriverCustomService {
     @Resource
     private DriverContext driverContext;
     @Resource
+    DriverMetadata driverMetadata;
+    @Resource
     private DriverSenderService driverSenderService;
 
     static ModbusFactory modbusFactory;
@@ -97,6 +100,8 @@ public class DriverCustomServiceImpl implements DriverCustomService {
         - FAULT:故障
          */
 //        driverContext.getDriverMetadata().getDeviceMap().keySet().forEach(id -> driverSenderService.deviceStatusSender(id, DeviceStatusEnum.ONLINE));
+//        driverMetadata.getDeviceIds().forEach(id -> driverSenderService.deviceStatusSender(id, DeviceStatusEnum.ONLINE, 25, TimeUnit.SECONDS));
+
     }
 
     @Override

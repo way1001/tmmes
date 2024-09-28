@@ -26,5 +26,5 @@ spring:
         threadPool:
           threadsInheritContextClassLoaderOfInitializingThread: true
           class: org.quartz.simpl.SimpleThreadPool
-          threadPriority: 5
-          threadCount: 50
+          threadPriority: 8
+          threadCount: 80

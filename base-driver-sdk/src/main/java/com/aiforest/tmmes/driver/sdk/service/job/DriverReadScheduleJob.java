@@ -76,7 +76,7 @@ public class DriverReadScheduleJob extends QuartzJobBean {
                     if (ObjectUtil.isNull(map)) {
                         continue;
                     }
-
+                    // TODO change ScheduledThreadPoolExecutor to discrete allocation communication polling
                     threadPoolExecutor.execute(() -> driverCommandService.read(device.getId(), pointId));
                 }
             }
